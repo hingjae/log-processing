@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -46,7 +45,8 @@ class KafkaLogConsumerTest {
                 }
                 """;
 
-        UserEventLogDto dto = new UserEventLogDto("honey",
+        UserEventLogDto dto = new UserEventLogDto(
+                "honey",
                 ActionType.CLICK,
                 "/product/123",
                 "127.0.0.1",
@@ -55,9 +55,7 @@ class KafkaLogConsumerTest {
         );
 
         UserEventLog entity = dto.toEntity();
-
         given(objectMapper.readValue(json, UserEventLogDto.class)).willReturn(dto);
-        given(dto.toEntity()).willReturn(entity);
 
         // when
         consumer.consume(json);
